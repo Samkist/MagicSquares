@@ -15,7 +15,7 @@ public class SquareFactory {
         this.size = size;
         square = new int[size][size];
         populateArray();
-
+        System.out.println(getSquareString());
     }
 
 
@@ -24,8 +24,9 @@ public class SquareFactory {
         String squareString = "";
         for(int i = 0; i < size; i++) {
             for(int j = 0; j < size; j++) {
-                squareString += Format.justify('c', square[i][j], 4);
+                squareString += Format.justify('c', square[j][i], 4);
             }
+            squareString += '\n';
         }
         return squareString;
     }
