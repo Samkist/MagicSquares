@@ -9,6 +9,9 @@ public class MagicSquareGUI extends GBFrame {
     private static JFrame frame = new MagicSquareGUI();
     private JTextField numberField = addIntegerField(0, 1, 1, 1,1 );
     private JButton createSquare = addButton("Create Square", 2, 1, 1, 1);
+    private JButton checkSquare = addButton("Check Square", 3, 1 ,1, 1);
+    private SquareFactory squareFactory;
+    private CheckDialog checkDialog = new CheckDialog(frame);
 
     public static void main(String[] args) {
         frame.setTitle("Magic Squares");
@@ -18,6 +21,10 @@ public class MagicSquareGUI extends GBFrame {
 
     @Override
     public void buttonClicked(JButton jButton) {
-        SquareFactory squareFactory = new SquareFactory(Integer.parseInt(numberField.getText()));
+        if(jButton.equals(createSquare))
+            squareFactory = new SquareFactory(Integer.parseInt(numberField.getText()));
+        if(jButton.equals(checkSquare)) {
+            checkDialog.setVisible(true);
+        }
     }
 }

@@ -1,8 +1,6 @@
 package me.Samkist.MagicSquares;
 
 import BreezySwing.Format;
-import com.sun.javafx.collections.ElementObservableListDecorator;
-import sun.java2d.DisposerTarget;
 
 import javax.swing.*;
 
