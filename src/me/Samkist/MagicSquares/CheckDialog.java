@@ -13,6 +13,7 @@ public class CheckDialog extends GBDialog {
 
     private JComboBox dropDown = addComboBox(1, 1, 1, 1);
     private JButton buildFields = addButton("Build Fields", 2, 1 ,1, 1);
+    private JButton checkFields = addButton("Check Fields", 3, 1, 1, 1);
     private JTextField[][] tempFields;
     private boolean fieldsExist = false;
 
@@ -36,6 +37,28 @@ public class CheckDialog extends GBDialog {
                 clearFields();
             generateFields();
         }
+
+        if(jButton.equals(checkFields)) {
+
+        }
+    }
+
+    public void checkFields() {
+        int previousX = 0, previousY = 0;
+        int correctValue = 0;
+        int currentAddedValues = 0;
+        int diagonalArray1[] = new int[dropDown.getSelectedIndex() + 2];
+        int diagonalArray2[] = new int[dropDown.getSelectedIndex() + 2];
+        for(int i = 0; i < dropDown.getSelectedIndex() + 2; i++) {
+            for(int j = 0; i < dropDown.getSelectedIndex() + 2; j++) {
+                if(i == 0) {
+                    correctValue += Integer.parseInt(tempFields[i][j].getText());
+                }
+
+                previousX = i;
+                previousY = j;
+            }
+        }
     }
 
     public void clearFields() {
@@ -50,6 +73,8 @@ public class CheckDialog extends GBDialog {
         fieldsExist = true;
         int tableSize = dropDown.getSelectedIndex() + 2;
         tempFields = new JTextField[tableSize][tableSize];
+        JTextField[][] verticalFields = new JTextField[tableSize][tableSize];
+        JTextField[][] horizontalFields = new JTextField[tableSize][tableSize];
         for(int i = 0; i < tableSize; i++) {
             for(int j = 0; j < tableSize; j++) {
                 JTextField tempField = addTextField("", 2 + i, j+2, 1, 1);
