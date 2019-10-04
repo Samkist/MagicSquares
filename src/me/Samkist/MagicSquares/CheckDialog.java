@@ -44,21 +44,50 @@ public class CheckDialog extends GBDialog {
     }
 
     public void checkFields() {
-        int previousX = 0, previousY = 0;
         int correctValue = 0;
         int currentAddedValues = 0;
         int diagonalArray1[] = new int[dropDown.getSelectedIndex() + 2];
         int diagonalArray2[] = new int[dropDown.getSelectedIndex() + 2];
         for(int i = 0; i < dropDown.getSelectedIndex() + 2; i++) {
-            for(int j = 0; i < dropDown.getSelectedIndex() + 2; j++) {
-                if(i == 0) {
-                    correctValue += Integer.parseInt(tempFields[i][j].getText());
-                }
+                correctValue += Integer.parseInt(tempFields[0][i].getText());
+        }
 
-                previousX = i;
-                previousY = j;
+        for(int i = 1; i < dropDown.getSelectedIndex() + 2; i++) {
+            int tempIntValue = 0;
+            for(int j = 0; j < dropDown.getSelectedIndex() + 2; j++) {
+                tempIntValue += Integer.parseInt(tempFields[i][j].getText());
+            }
+            if(tempIntValue == correctValue)
+                continue;
+            return;
+        }
+
+        for(int i = 0; i < dropDown.getSelectedIndex() + 2; i++) {
+            int tempIntValue = 0;
+            for(int j = 0; j < dropDown.getSelectedIndex() + 2; j++) {
+                tempIntValue += Integer.parseInt(tempFields[j][i].getText());
+            }
+            if(tempIntValue == correctValue)
+                continue;
+            return;
+        }
+        int tempIntValue = 0;
+        for(int i = 0; i < dropDown.getSelectedIndex() + 2; i++) {
+            tempIntValue += Integer.parseInt(tempFields[i][i].getText());
+        }
+        if(!(tempIntValue == correctValue)) {
+            return;
+        }
+        tempIntValue = 0;
+        for(int i = dropDown.getSelectedIndex() + 1; i >= 0; i--) {
+            for(int j = 0; j < dropDown.getSelectedIndex() + 2; j++) {
+                tempIntValue += Integer.parseInt(tempFields[i][j].getText());
             }
         }
+        if(!(tempIntValue == correctValue)) {
+            return;
+        }
+
     }
 
     public void clearFields() {
@@ -73,8 +102,6 @@ public class CheckDialog extends GBDialog {
         fieldsExist = true;
         int tableSize = dropDown.getSelectedIndex() + 2;
         tempFields = new JTextField[tableSize][tableSize];
-        JTextField[][] verticalFields = new JTextField[tableSize][tableSize];
-        JTextField[][] horizontalFields = new JTextField[tableSize][tableSize];
         for(int i = 0; i < tableSize; i++) {
             for(int j = 0; j < tableSize; j++) {
                 JTextField tempField = addTextField("", 2 + i, j+2, 1, 1);
