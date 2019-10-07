@@ -30,17 +30,6 @@ public class SquareFactory {
         return tempLabels;
     }
 
-    public String getSquareString() {
-        String squareString = "";
-        for(int i = 0; i < size; i++) {
-            for(int j = 0; j < size; j++) {
-                squareString += Format.justify('c', square[j][i], 4);
-            }
-            squareString += '\n';
-        }
-        return squareString;
-    }
-
 
     public void populateArray() {
         int currentX, currentY;
