@@ -9,6 +9,8 @@ import BreezySwing.IntegerField;
 
 import javax.swing.*;
 
+
+@SuppressWarnings("Duplicates")
 public class CheckDialog extends GBDialog {
 
     private JComboBox dropDown = addComboBox(1, 1, 1, 1);
@@ -21,6 +23,7 @@ public class CheckDialog extends GBDialog {
 
     public CheckDialog(JFrame jFrame) {
         super(jFrame);
+        checkFields.setEnabled(false);
         dropDown.addItem("2x2");
         dropDown.addItem("3x3");
         dropDown.addItem("4x4");
@@ -37,6 +40,7 @@ public class CheckDialog extends GBDialog {
             if(fieldsExist)
                 clearFields();
             generateFields();
+            checkFields.setEnabled(true);
         }
 
         if(jButton.equals(checkFields)) {
@@ -47,69 +51,61 @@ public class CheckDialog extends GBDialog {
     private boolean errorCheck() {
         for(IntegerField[] field : tempFields) {
             for(IntegerField sfield : field) {
-                if(!(sfield.isValidNumber()))
+                if(!(sfield.isValidNumber())) {
                     return true;
+                }
             }
         }
         return false;
     }
 
     private String checkFields() {
+        if(errorCheck()) {
+            clearFields();
+            return "Fields contain invalid data";
+        }
         String incorrect = "Incorrect Square";
         String correct  = "Square is Correct";
         int correctValue = 0;
         for(int i = 0; i < tableSize; i++) {
-                correctValue += Integer.parseInt(tempFields[0][i].getText());
+                correctValue += tempFields[0][i].getNumber();
         }
 
         for(int i = 1; i < tableSize; i++) {
             int tempIntValue = 0;
             for(int j = 0; j < tableSize; j++) {
-                tempIntValue += Integer.parseInt(tempFields[i][j].getText());
+                tempIntValue += tempFields[i][j].getNumber();
             }
             if(!(tempIntValue == correctValue)) {
-                System.out.println("Incorrect: 1");
                 return incorrect;
             }
         }
-
         for(int i = 0; i < tableSize; i++) {
             int tempIntValue = 0;
             for(int j = 0; j < tableSize; j++) {
-                tempIntValue += Integer.parseInt(tempFields[j][i].getText());
+                tempIntValue += tempFields[j][i].getNumber();
             }
             if(!(tempIntValue == correctValue)) {
-                System.out.println("Incorrect: 2");
                 return incorrect;
             }
         }
         int tempIntValue = 0;
         for(int i = 0; i < tableSize; i++) {
-            tempIntValue += Integer.parseInt(tempFields[i][i].getText());
+            tempIntValue += tempFields[i][i].getNumber();
         }
         if(!(tempIntValue == correctValue)) {
-            System.out.println("Incorrect: 3");
             return incorrect;
         }
-/*        tempIntValue = 0;
-        for(int i = tableSize - 1; i >= 0; i--) {
-            for(int j = 0; j < tableSize; j++) {
-                tempIntValue += Integer.parseInt(tempFields[i][j].getText());
-            }
-        }*/
         tempIntValue = 0;
         int i = tableSize - 1;
             for(int j = 0; j < tableSize; j++) {
-                tempIntValue += Integer.parseInt(tempFields[i][j].getText());
+                tempIntValue += tempFields[i][j].getNumber();
                 i--;
             }
         if(!(tempIntValue == correctValue)) {
-            System.out.println(tempIntValue);
-            System.out.println(correctValue);
-            System.out.println("Incorrect: 4");
             return incorrect;
         }
-        return correct;
+        return correct + "\n Square Constant is: " + correctValue;
     }
 
     public void clearFields() {
@@ -118,6 +114,8 @@ public class CheckDialog extends GBDialog {
                 remove(sfield);
             }
         }
+        setSize(500, 500);
+        checkFields.setEnabled(false);
     }
 
     public void generateFields() {

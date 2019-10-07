@@ -6,17 +6,29 @@ import javax.swing.*;
 
 
 public class SquareFactory {
-    private volatile int[][] square;
+    private int[][] square;
     private int size;
+    private JLabel[][] tempLabels;
+    private MagicSquareGUI gui;
 
-    public SquareFactory(int size) {
+    public SquareFactory(int size, MagicSquareGUI gui) {
         this.size = size;
+        this.gui = gui;
         square = new int[size][size];
         populateArray();
-        System.out.println(getSquareString());
     }
 
+    public int[][] getSquare() {
+        return square;
+    }
 
+    public int getSize() {
+        return size;
+    }
+
+    public JLabel[][] getTempLabels() {
+        return tempLabels;
+    }
 
     public String getSquareString() {
         String squareString = "";
@@ -29,6 +41,7 @@ public class SquareFactory {
         return squareString;
     }
 
+
     public void populateArray() {
         int currentX, currentY;
         currentX = size/2;
@@ -39,7 +52,6 @@ public class SquareFactory {
             if(currentX+1 > size-1 && currentY-1 < 0) {
                 currentY++;
             } else if(currentY-1 < 0) {
-
                 currentX++;
                 currentY = size-1;
             } else if(currentX+1 > size-1) {
