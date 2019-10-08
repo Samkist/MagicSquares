@@ -6,7 +6,7 @@ import javax.swing.*;
 
 public class SquareDialog extends GBDialog {
 
-    SquareFactory factory;
+    private SquareFactory factory;
 
     public SquareDialog(JFrame frame, SquareFactory factory) {
         super(frame);
