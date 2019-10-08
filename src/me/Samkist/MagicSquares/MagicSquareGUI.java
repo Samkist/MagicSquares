@@ -9,11 +9,14 @@ public class MagicSquareGUI extends GBFrame {
 
     private static JFrame frame = new MagicSquareGUI();
     private IntegerField numberField = addIntegerField(0, 1, 1, 1,1 );
-    private JButton createSquare = addButton("Create Square", 2, 1, 1, 1);
-    private JButton checkSquare = addButton("Check Square", 3, 1 ,1, 1);
+    private JButton createSquare = addButton("Create Square", 3, 1, 1, 1);
+    private JButton checkSquare = addButton("Check Square", 4, 1 ,1, 1);
+    private IntegerField startingNumber = addIntegerField(0, 1, 2, 1, 1);
     private SquareFactory squareFactory;
     private CheckDialog checkDialog = new CheckDialog(frame);
     private SquareDialog squareDialog;
+    private JLabel squareSize = addLabel("Square Size", 2,1,1, 1);
+    private JLabel startingNumberLabel = addLabel("Starting Number", 2, 2, 1, 1);
 
     public static void main(String[] args) {
         frame.setTitle("Magic Squares");
@@ -32,7 +35,7 @@ public class MagicSquareGUI extends GBFrame {
                 messageBox("Please enter a positive integer. This function does not support negative numbers.");
                 return;
             }
-            squareFactory = new SquareFactory(numberField.getNumber(), this);
+            squareFactory = new SquareFactory(numberField.getNumber(), startingNumber.getNumber(), this);
             squareDialog = new SquareDialog(this, squareFactory);
             squareDialog.setVisible(true);
         }
@@ -44,7 +47,7 @@ public class MagicSquareGUI extends GBFrame {
     }
 
     private boolean errorCheck() {
-        if(!(numberField.isValidNumber())) {
+        if(!(numberField.isValidNumber()) || !(startingNumber.isValidNumber())) {
             return true;
         }
         return false;

@@ -10,10 +10,12 @@ public class SquareFactory {
     private int size;
     private JLabel[][] tempLabels;
     private MagicSquareGUI gui;
+    private int starter;
 
-    public SquareFactory(int size, MagicSquareGUI gui) {
+    public SquareFactory(int size, int starter, MagicSquareGUI gui) {
         this.size = size;
         this.gui = gui;
+        this.starter = starter;
         square = new int[size][size];
         populateArray();
     }
@@ -35,8 +37,9 @@ public class SquareFactory {
         int currentX, currentY;
         currentX = size/2;
         currentY = 0;
+        int editedStarter = starter -1;
         for(int i = 1; i <= size*size; i++) {
-            square[currentX][currentY] = i;
+            square[currentX][currentY] = i + editedStarter;
             //Checks top
             if(currentX+1 > size-1 && currentY-1 < 0) {
                 currentY++;
